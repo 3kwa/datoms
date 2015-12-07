@@ -5,7 +5,7 @@ datom:
     - entity
     - attribute
     - value (JSON serializable)
-    - time
+    - time (optional, set to UTC time on post)
 
 A Datom is immutable!
 
@@ -50,6 +50,14 @@ True
 >>> datoms.delete('delete_me')
 >>> datoms.get('delete_me')
 []
+
+>>> datoms = Datoms('test.datoms')
+>>> datoms.post(datom)
+>>> import os.path
+>>> os.path.isfile('test.datoms')
+True
+>>> datoms._connection.close() # FIXME
+>>> os.unlink('test.datoms')
 """
 
 import json
@@ -81,8 +89,12 @@ class Datom(namedtuple('Datom', ['entity', 'attribute', 'value', 'time'])):
 class Datoms(object):
     """Storing Datoms of data"""
 
-    def __init__(self):
-        self._connection = sqlite3.connect(':memory:', detect_types=sqlite3.PARSE_DECLTYPES)
+    def __init__(self, filename=None):
+        if filename is None:
+            self.filename = ':memory:'
+        else:
+            self.filename = filename
+        self._connection = sqlite3.connect(self.filename, detect_types=sqlite3.PARSE_DECLTYPES)
         self._sql = sql.SQL(self._connection)
         self._sql.run("""CREATE TABLE IF NOT EXISTS datoms
                          (entity, attribute, value, time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
