@@ -83,8 +83,7 @@ class Datom(namedtuple('Datom', ['entity', 'attribute', 'value', 'time'])):
     def as_record(self):
         return (self.entity,
                 self.attribute,
-                json.dumps(self.value),
-                self.time)
+                json.dumps(self.value))
 
 class Datoms(object):
     """Storing Datoms of data"""
@@ -105,16 +104,18 @@ class Datoms(object):
         self._sql.run("""CREATE VIEW IF NOT EXISTS current
                          AS SELECT max(_ROWID_)
                             FROM datoms
-                            GROUP BY entity, attribute""")
+                            GROUP BY entity, attribute
+                      """)
 
     def post(self, datom):
         """Persist datom"""
-        if datom.time is None:
-            record = datom.as_record()
-            self._sql.run("""INSERT INTO datoms (entity, attribute, value)
-                             VALUES (?, ?, ?)
-                          """,
-                          [record[:3]])
+        if datom.time is not None:
+            datom = Datom(datom.entity, datom.attribute, datom.value)
+        record = datom.as_record()
+        self._sql.run("""INSERT INTO datoms (entity, attribute, value)
+                         VALUES (?, ?, ?)
+                      """,
+                      [record])
 
     def get(self, entity, attribute=None):
         """Retrieve datoms from storage"""
