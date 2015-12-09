@@ -13,6 +13,7 @@ A datom has 4 properties:
 * value: the information itself (JSON serializable).
 * time: when datom was stored.
 
+
     >>> from datoms import Datom
     >>> datom = Datom('entity', 'some/attribute', 'value')
     >>> datom.time is None
