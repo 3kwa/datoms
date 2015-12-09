@@ -90,6 +90,8 @@ make it not show up when calling `get`.
     >>> len(datoms.get('entity'))
     2
 
+To *void* just delete:
+
     >>> datoms.delete('entity', 'void/soon')
     >>> len(datoms.get('entity'))
     1
