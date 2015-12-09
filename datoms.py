@@ -1,13 +1,6 @@
 """
-A Datomic inspired SQLite backed storage
-
-datom:
-    - entity
-    - attribute
-    - value (JSON serializable)
-    - time (optional, set to UTC time on post)
-
-A Datom is immutable!
+A simplistic, Datomic inspired, SQLite backed, REST influenced,
+schemaless auditable facts storage.
 
 >>> datom = Datom('entity', 'some/attribute', 'value')
 >>> datom.time is None
