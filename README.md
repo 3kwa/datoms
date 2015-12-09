@@ -3,6 +3,7 @@ auditable facts storage.
 
 Fun, buzzwordy and possibly useful!
 
+
 `Data + Atom = Datom`
 =====================
 
