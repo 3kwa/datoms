@@ -8,10 +8,10 @@ Fun, buzzwordy and possibly useful!
 
 A datom has 4 properties:
 
-* entity: the *thing* you want to record information about (akin to primary key)
-* attribute: a *label* for the information you want to record
-* value: the information itself (JSON serializable)
-* time: when datom was stored
+* entity: the *thing* you want to record information about (akin to primary key).
+* attribute: a *label* for the information you want to record.
+* value: the information itself (JSON serializable).
+* time: when datom was stored.
 
     >>> from datoms import Datom
     >>> datom = Datom('entity', 'some/attribute', 'value')
